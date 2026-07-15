@@ -36,6 +36,6 @@ jobs:
       
       - name: Upload Test Results
         if: always()   #Makes sure test report is uploaded even if the test fails
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: test-results.xml
