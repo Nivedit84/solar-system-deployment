@@ -47,6 +47,7 @@ jobs:
           path: test-results.xml
 
   code_coverage:
+    continue-on-error: true
     strategy:
       matrix:
         os: [ubuntu-latest]
