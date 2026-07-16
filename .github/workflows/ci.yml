@@ -45,3 +45,24 @@ jobs:
         with:
           name: test-results.xml
           path: test-results.xml
+
+  code_coverage:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [18,19,20]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v7.0.0
+      - name: Setup NodeJS Env
+        uses: actions/setup-node@v7.0.0
+        with:
+          node_version: ${{ matrix.node_version }}
+      - name: Run Code Coverage
+        run: npm run coverage
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: coverage
+          path: coverage
