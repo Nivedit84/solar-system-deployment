@@ -98,7 +98,7 @@ jobs:
           username: ${{ vars.docker_user }}
           password: ${{ secrets.docker_pass }}
       - name: Build and Test docker image
-        uses: docker/build-push-actions@v7
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: false
