@@ -114,4 +114,11 @@ jobs:
                 ${{ vars.docker_user }}/solar-system:${{ github.sha }}
              echo testing image URL using wget
              wget -q -O - 127.0.0.1:3000/live | grep live
+      - name: Docker push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: ${{ vars.docker_user }}/solar-system:${{ github.sha }}
+        
         
