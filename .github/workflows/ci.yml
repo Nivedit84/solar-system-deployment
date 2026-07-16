@@ -39,7 +39,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install Deps
-        run: npm ci
+        run: npm install
 
       - name: Run Unit Tests
         id: nodejs-unit-testing
@@ -72,7 +72,7 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
       - name: Install Deps
-        run: npm ci
+        run: npm install
       - name: Run Code Coverage
         continue-on-error: true
         run: npm run coverage
