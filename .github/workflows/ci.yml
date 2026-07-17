@@ -90,7 +90,7 @@ jobs:
 
   
   container_validation:
-    needs: [unit_test_coverage]
+    needs: [sast]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
