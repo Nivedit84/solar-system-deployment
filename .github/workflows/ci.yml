@@ -78,7 +78,7 @@ jobs:
           name: Coverage report
           path: coverage
   sast:
-    needs: [secret_scanning, unit_test-coverage]
+    needs: [secret_scanning, unit_test_coverage]
     name: Static Application Security Testing
     runs-on: ubuntu-latest
     steps:
