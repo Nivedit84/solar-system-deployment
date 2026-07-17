@@ -132,13 +132,14 @@ jobs:
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: '${{ vars.docker_user }}/solar-system:${{ github.sha }}'
-          format: sarif
+          format: 'table'
           output: trivy-results.sarif
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL'
       - name: Upload reports
+        if: always()
         uses: actions/upload-artifact@v7.0.1
         with:
           name: Aqua Trivy report
