@@ -19,6 +19,7 @@ env:
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
 jobs:
   secret_scanning:
+    name: Secret Scanner
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -76,6 +77,17 @@ jobs:
         with:
           name: Coverage report
           path: coverage
+  sast:
+    needs: [secret_scanning, unit_test-coverage]
+    name: Static Application Security Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Official SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8.2.1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: http://44.212.31.24:9000/
+
   
   container_validation:
     needs: [unit_test_coverage]
