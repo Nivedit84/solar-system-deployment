@@ -103,7 +103,7 @@ jobs:
         with:
           project: "solar-system"
           path: "."
-          format: "HTML,JSON"
+          format: "HTML"
           out: "reports"
           nvdApiKey: ${{ secrets.NVD_API_KEY }}
       - name: Upload reports
