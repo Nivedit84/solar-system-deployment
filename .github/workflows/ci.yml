@@ -82,6 +82,10 @@ jobs:
     name: Static Application Security Testing
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - name: Official SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v8.2.1
         env:
