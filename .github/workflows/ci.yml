@@ -122,12 +122,23 @@ jobs:
         with:
           username: ${{ vars.docker_user }}
           password: ${{ secrets.docker_pass }}
-      - name: Build and Test docker image
+      - name: Build docker image
         uses: docker/build-push-action@v7
         with:
           context: .
           push: false
           tags: ${{ vars.docker_user }}/solar-system:${{ github.sha }}
+      - name: Aqua Security Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: '${{ vars.docker_user }}/solar-system:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+
       - name: Docker Test
         run: |
              docker images
