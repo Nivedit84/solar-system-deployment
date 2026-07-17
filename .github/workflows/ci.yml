@@ -92,7 +92,25 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: http://44.212.31.24:9000/
 
-  
+  dep_check:
+    runs-on: ubuntu-latest
+    needs: [secret_scanning, unit_test_coverage]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v7
+      - name: Run Dependency check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "solar-system"
+          path: "."
+          format: "HTML,JSON"
+          out: "reports"
+          nvdApiKey: ${{ secrets.NVD_API_KEY }}
+      - name: Upload reports
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: Dep reports
+          path: reports 
   container_validation:
     needs: [sast]
     runs-on: ubuntu-latest
