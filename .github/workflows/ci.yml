@@ -112,7 +112,7 @@ jobs:
           name: Dep reports
           path: reports 
   container_validation:
-    needs: [sast, dep_check]
+    needs: [dep_check]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
