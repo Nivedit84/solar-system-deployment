@@ -59,7 +59,7 @@ jobs:
         run: |
              cd gitops
              sed -i "s/tag:.*/tag:${{ env.IMAGE_TAG }}/" environments/dev/values.yaml
-             cat environment/dev/values.yaml
+             cat environments/dev/values.yaml
       - name: Configure Git
         run: |
              cd gitops
