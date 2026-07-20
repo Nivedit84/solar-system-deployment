@@ -6,7 +6,7 @@ on:
       - main
     types:
       - opened
-      - reopened
+      - synchronize
     paths-ignore:
       - README.md
   workflow_dispatch:
@@ -112,7 +112,7 @@ jobs:
           name: Dep reports
           path: reports 
   container_validation:
-    needs: [sast]
+    needs: [sast, dep_check]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
