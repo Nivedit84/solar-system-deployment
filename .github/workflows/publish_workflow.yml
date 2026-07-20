@@ -41,3 +41,35 @@ jobs:
           path: trivy-results.sarif
       - name: Docker push
         run: docker push ${{ vars.docker_user }}/solar-system:${{ github.sha }}
+  
+  gitops_update:
+    runs-on: ubuntu-latest
+    needs: docker_build_publish
+    steps:
+      - name: Checkout GitOps Repo
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          repository: Nivedit84/solar-system-gitops
+          token: ${{ secrets.ARGO_TOKEN }}
+          path: gitops
+      - name: Update image tag
+        run: |
+             cd gitops
+             sed -i "s/tag:.*/tag:${{ github.sha }}/" environment/dev/values.yaml
+             cat environment/dev/values.yaml
+      - name: Configure Git
+        run: |
+             cd gitops
+             git config user.name "github-actions"
+             git config user.email "github-actions@github.com"
+      - name: Commit changes
+        run: |
+             cd gitops
+             git add .
+             if git diff --cached --quiet; then
+               echo "No Changes"
+             else
+               git commit -m "Updated image"
+               git push
+             fi
